@@ -1,12 +1,13 @@
 import {
   IconArrowLeft,
   IconBookmark,
+  IconStar,
   IconThumbDown,
   IconThumbUp,
 } from "@tabler/icons-react";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getAnimals } from "../api/animals";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { Route } from "../routes/animal/$animal";
@@ -16,6 +17,7 @@ export default function AnimalDetails() {
   const { animalDetails, setAnimalDetails, updateCharacteristicLike } =
     useAnimalsStore();
   const [savedAnimals, setSavedAnimals] = useLocalStorage("savedAnimals", []);
+  const [rating, setRating] = useState(0);
   const { animal } = Route.useParams();
 
   const { data, isLoading, isError } = useQuery({
@@ -25,6 +27,7 @@ export default function AnimalDetails() {
       const newAnimal = data.map((item) => {
         return {
           ...item,
+          rating: 0,
           characteristics: Object.entries(item.characteristics).reduce(
             (acc, [key, value]) => {
               acc[key] = {
@@ -75,6 +78,15 @@ export default function AnimalDetails() {
     animalDetails &&
     savedAnimals.some((saved) => saved[0].name === animalDetails[0].name);
 
+  const handleRatingChange = (newRating) => {
+    if (animalDetails) {
+      const newAnimalDetails = [...animalDetails];
+      newAnimalDetails[0].rating = newRating;
+      setAnimalDetails(newAnimalDetails);
+      setRating(newRating);
+    }
+  };
+
   if (isLoading) return <p>Loading...</p>;
   if (isError) return <p>Error</p>;
 
@@ -102,7 +114,7 @@ export default function AnimalDetails() {
         </div>
         <div className="mt-5 flex flex-col gap-5">
           <h1 className="text-3xl">{name}</h1>
-          <div className="grid gap-5 md:grid-cols-3 md:grid-rows-2">
+          <div className="grid gap-5 md:grid-cols-3 md:grid-rows-3">
             <div className="col-span-1 row-start-1 h-fit rounded-md bg-slate-700 p-2">
               <h2 className="text-2xl">Taxonomy</h2>
               {taxonomy &&
@@ -117,7 +129,7 @@ export default function AnimalDetails() {
               {locations &&
                 locations.map((location, i) => <p key={i}>{location}</p>)}
             </div>
-            <div className="rounded-md bg-slate-700 p-2 md:col-span-2 md:row-span-2">
+            <div className="rounded-md bg-slate-700 p-2 md:col-span-2 md:row-span-3">
               <h2 className="text-2xl">Characteristics</h2>
               {characteristics &&
                 Object.entries(characteristics).map(
@@ -147,6 +159,22 @@ export default function AnimalDetails() {
                     </div>
                   ),
                 )}
+            </div>
+            <div className="h-fit rounded-md bg-slate-700 p-2 md:col-span-1 md:row-start-3">
+              <h2 className="text-2xl">Rating</h2>
+              <div className="flex items-center gap-2">
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <button
+                    onClick={() => handleRatingChange(i + 1)}
+                    className={`${
+                      rating === i + 1 ? "text-yellow-500" : ""
+                    } hover:text-yellow-400`}
+                    key={i}
+                  >
+                    <IconStar size={20} />
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
         </div>
