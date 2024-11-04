@@ -9,6 +9,10 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
   const PORT: number = Number(`${env.VITE_PORT ?? "3001"}`);
 
   return {
+    test: {
+      globals: true,
+      environment: "jsdom",
+    },
     server: {
       proxy: {
         "/api": {
