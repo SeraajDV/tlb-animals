@@ -1,7 +1,6 @@
 import axios from "axios";
 import { describe, it, beforeEach, expect, vi } from "vitest";
 import { getAnimals } from "./animals";
-import { mock } from "node:test";
 
 vi.mock("axios");
 
