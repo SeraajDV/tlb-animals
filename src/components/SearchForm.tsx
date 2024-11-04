@@ -29,7 +29,7 @@ export default function SearchForm() {
         e.stopPropagation();
         form.handleSubmit();
       }}
-      className="flex items-center gap-2 justify-center"
+      className="flex items-center justify-center gap-2"
     >
       <div>
         <form.Field

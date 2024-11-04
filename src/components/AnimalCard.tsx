@@ -1,9 +1,9 @@
 import { Link } from "@tanstack/react-router";
 import { AnimalType } from "../types/animals.type";
 
-export default function AnimalCard({ animal }: {animal: AnimalType} ) {
+export default function AnimalCard({ animal }: { animal: AnimalType }) {
   return (
-    <div className="flex flex-col rounded bg-gray-500 p-2 w-5/6 md:w-1/6">
+    <div className="flex w-5/6 flex-col rounded bg-gray-500 p-2 md:w-1/6">
       <h2 className="text-lg">{animal.name}</h2>
       <Link
         to={`/animal/${animal.name}`}

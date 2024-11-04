@@ -1,12 +1,21 @@
-import { create } from 'zustand';
-import { AnimalType } from '../types/animals.type';
+import { create } from "zustand";
 
-interface AnimalsStore {
-  animals: AnimalType[];
-  setAnimals: (animals: AnimalType[]) => void;
-}
-
-export const useAnimalsStore = create<AnimalsStore>((set) => ({
+export const useAnimalsStore = create((set) => ({
   animals: [],
-  setAnimals: (animals: AnimalType[]) => set({ animals }),
-}))
+  setAnimals: (data: any) => set({ animals: data }),
+  animalDetails: [],
+  setAnimalDetails: (data: any) => set({ animalDetails: data }),
+  updateCharacteristicLike: (characteristicKey, newLikeState) =>
+    set((state) => ({
+      animalDetails: state.animalDetails.map((animal) => ({
+        ...animal,
+        characteristics: {
+          ...animal.characteristics,
+          [characteristicKey]: {
+            ...animal.characteristics[characteristicKey],
+            like: newLikeState,
+          },
+        },
+      })),
+    })),
+}));
