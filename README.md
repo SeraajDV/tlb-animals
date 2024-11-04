@@ -3,6 +3,8 @@
 
 This application allows you to search for any type of wildlife, rate them and like or dislike their attributes. This app makes use of the https://api-ninjas.com/api/animals API to get all wildlife data
 
+link to deployed site: https://tlb-animals.netlify.app/
+
 
 
 
