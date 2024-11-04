@@ -1,10 +1,18 @@
 import { create } from "zustand";
 
-export const useAnimalsStore = create((set) => ({
+export interface AnimalsStore {
+  animals: any[];
+  setAnimals: (data: any[]) => void;
+  animalDetails: any[];
+  setAnimalDetails: (data: any[]) => void;
+  updateCharacteristicLike: (characteristicKey: string, newLikeState: string) => void;
+}
+
+export const useAnimalsStore = create<AnimalsStore>((set) => ({
   animals: [],
-  setAnimals: (data: any) => set({ animals: data }),
+  setAnimals: (data: any[]) => set({ animals: data }),
   animalDetails: [],
-  setAnimalDetails: (data: any) => set({ animalDetails: data }),
+  setAnimalDetails: (data: any[]) => set({ animalDetails: data }),
   updateCharacteristicLike: (characteristicKey, newLikeState) =>
     set((state) => ({
       animalDetails: state.animalDetails.map((animal) => ({
@@ -19,3 +27,4 @@ export const useAnimalsStore = create((set) => ({
       })),
     })),
 }));
+

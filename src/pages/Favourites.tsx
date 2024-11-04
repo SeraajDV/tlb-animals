@@ -5,9 +5,12 @@ import SavedAnimal from "../components/SavedAnimal";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 
 export default function Favourites() {
-  const [savedAnimals, setSavedAnimals] = useLocalStorage("savedAnimals", []);
+  const [savedAnimals, setSavedAnimals] = useLocalStorage<any[]>(
+    "savedAnimals",
+    [],
+  );
 
-  const handleRemove = (animalName) => {
+  const handleRemove = (animalName: string) => {
     setSavedAnimals(
       savedAnimals.filter((animal) => animal[0].name !== animalName),
     );

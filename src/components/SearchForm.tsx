@@ -2,18 +2,19 @@ import { useForm } from "@tanstack/react-form";
 import { useMutation } from "@tanstack/react-query";
 import { getAnimals } from "../api/animals";
 import { useAnimalsStore } from "../store/useAnimalsStore";
+import { AnimalType } from "../types/animals.type";
 
-export default function SearchForm() {
+export default function SearchForm(): JSX.Element {
   const { setAnimals } = useAnimalsStore();
-  const saveAnimals = useMutation({
+  const saveAnimals = useMutation<AnimalType[], unknown, string>({
     mutationKey: ["animals"],
-    mutationFn: (name: string) => getAnimals(name),
+    mutationFn: getAnimals,
     onSuccess: (data) => {
       setAnimals(data);
     },
   });
 
-  const form = useForm({
+  const form = useForm<{ name: string }>({
     defaultValues: {
       name: "",
     },
@@ -22,6 +23,7 @@ export default function SearchForm() {
       value.name = "";
     },
   });
+
   return (
     <form
       onSubmit={(e) => {

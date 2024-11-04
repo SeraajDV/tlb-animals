@@ -1,13 +1,20 @@
 import { IconTrash } from "@tabler/icons-react";
 import { Link } from "@tanstack/react-router";
+import { AnimalType } from "../types/animals.type";
 
-export default function SavedAnimal({ animal, handleRemove }: any) {
+export default function SavedAnimal({
+  animal,
+  handleRemove,
+}: {
+  animal: AnimalType;
+  handleRemove: (animalName: string) => void;
+}) {
   return (
-    <div key={animal[0].name} className="rounded-lg bg-slate-700 p-4 shadow-lg">
+    <div key={animal.name} className="rounded-lg bg-slate-700 p-4 shadow-lg">
       <div className="flex items-center justify-between">
-        <h2 className="text-xl font-semibold">{animal[0].name}</h2>
+        <h2 className="text-xl font-semibold">{animal.name}</h2>
         <button
-          onClick={() => handleRemove(animal[0].name)}
+          onClick={() => handleRemove(animal.name)}
           className="text-red-400 hover:text-red-500"
           title="Remove from favourites"
         >
@@ -20,7 +27,7 @@ export default function SavedAnimal({ animal, handleRemove }: any) {
         <div>
           <h3 className="text-lg font-medium text-gray-300">Taxonomy</h3>
           <div className="mt-1 grid grid-cols-2 gap-2">
-            {Object.entries(animal[0].taxonomy).map(([key, value]) => (
+            {Object.entries(animal.taxonomy).map(([key, value]) => (
               <div key={key} className="text-sm">
                 <span className="text-gray-400">{key}:</span>{" "}
                 <span>{value}</span>
@@ -33,7 +40,7 @@ export default function SavedAnimal({ animal, handleRemove }: any) {
         <div>
           <h3 className="text-lg font-medium text-gray-300">Locations</h3>
           <div className="mt-1 flex flex-wrap gap-2">
-            {animal[0].locations.map((location) => (
+            {animal.locations.map((location) => (
               <span
                 key={location}
                 className="rounded-full bg-slate-600 px-2 py-1 text-sm"
@@ -48,7 +55,7 @@ export default function SavedAnimal({ animal, handleRemove }: any) {
         <div>
           <h3 className="text-lg font-medium text-gray-300">Characteristics</h3>
           <div className="mt-1 space-y-2">
-            {Object.entries(animal[0].characteristics).map(
+            {Object.entries(animal.characteristics).map(
               ([key, { value, like }]) => (
                 <div key={key} className="text-sm">
                   <div className="flex items-center justify-between">
@@ -74,7 +81,7 @@ export default function SavedAnimal({ animal, handleRemove }: any) {
       </div>
 
       <Link
-        to={`/animal/${animal[0].name}`}
+        to={`/animal/${animal.name}`}
         className="mt-4 inline-block rounded bg-blue-600 px-4 py-2 text-sm hover:bg-blue-700"
       >
         View Details
