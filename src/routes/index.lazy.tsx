@@ -1,14 +1,7 @@
 import * as React from 'react'
 import { createLazyFileRoute } from '@tanstack/react-router'
+import Home from '../pages/Home'
 
 export const Route = createLazyFileRoute('/')({
-  component: HomeComponent,
+  component: Home,
 })
-
-function HomeComponent() {
-  return (
-    <div className="p-2">
-      <h3>Welcome Home!</h3>
-    </div>
-  )
-}
