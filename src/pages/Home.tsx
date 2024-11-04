@@ -6,7 +6,7 @@ import { AnimalType } from "../types/animals.type";
 export default function Home() {
   const { animals } = useAnimalsStore();
   return (
-    <div className="flex flex-1 flex-col p-5">
+    <div className="flex flex-1 flex-col p-5 overflow-x-hidden">
       <h1 className="text-3xl">Welcome to TLB Animals</h1>
       <h2 className="text-xl">
         Search, explore and save your favourite animals

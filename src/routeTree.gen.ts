@@ -13,6 +13,7 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as AnimalAnimalImport } from './routes/animal/$animal'
 
 // Create Virtual Routes
 
@@ -33,6 +34,12 @@ const IndexLazyRoute = IndexLazyImport.update({
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
 
+const AnimalAnimalRoute = AnimalAnimalImport.update({
+  id: '/animal/$animal',
+  path: '/animal/$animal',
+  getParentRoute: () => rootRoute,
+} as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -51,6 +58,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FavouritesLazyImport
       parentRoute: typeof rootRoute
     }
+    '/animal/$animal': {
+      id: '/animal/$animal'
+      path: '/animal/$animal'
+      fullPath: '/animal/$animal'
+      preLoaderRoute: typeof AnimalAnimalImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -59,36 +73,41 @@ declare module '@tanstack/react-router' {
 export interface FileRoutesByFullPath {
   '/': typeof IndexLazyRoute
   '/favourites': typeof FavouritesLazyRoute
+  '/animal/$animal': typeof AnimalAnimalRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexLazyRoute
   '/favourites': typeof FavouritesLazyRoute
+  '/animal/$animal': typeof AnimalAnimalRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexLazyRoute
   '/favourites': typeof FavouritesLazyRoute
+  '/animal/$animal': typeof AnimalAnimalRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/favourites'
+  fullPaths: '/' | '/favourites' | '/animal/$animal'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/favourites'
-  id: '__root__' | '/' | '/favourites'
+  to: '/' | '/favourites' | '/animal/$animal'
+  id: '__root__' | '/' | '/favourites' | '/animal/$animal'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexLazyRoute: typeof IndexLazyRoute
   FavouritesLazyRoute: typeof FavouritesLazyRoute
+  AnimalAnimalRoute: typeof AnimalAnimalRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexLazyRoute: IndexLazyRoute,
   FavouritesLazyRoute: FavouritesLazyRoute,
+  AnimalAnimalRoute: AnimalAnimalRoute,
 }
 
 export const routeTree = rootRoute
@@ -102,7 +121,8 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/favourites"
+        "/favourites",
+        "/animal/$animal"
       ]
     },
     "/": {
@@ -110,6 +130,9 @@ export const routeTree = rootRoute
     },
     "/favourites": {
       "filePath": "favourites.lazy.tsx"
+    },
+    "/animal/$animal": {
+      "filePath": "animal/$animal.tsx"
     }
   }
 }
